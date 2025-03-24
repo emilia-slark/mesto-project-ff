@@ -10,7 +10,7 @@ const container = document.querySelector('.places__list');
 
 function getCardElement(card) {
   const cardElement = cardTemplate.querySelector('.places__item.card').cloneNode(true);
-  cardElement.querySelector('.card__delete-button').addEventListener('click', removeCardElement);
+  cardElement.querySelector('.card__delete-button').addEventListener('click', () => removeCardElement(cardElement));
 
   cardElement.querySelector('.card__image').src = card.link;
   cardElement.querySelector('.card__title').textContent = card.name;
@@ -21,11 +21,11 @@ function getCardElement(card) {
 // @todo: Функция удаления карточки
 
 function removeCardElement(cardElement) {
-  cardElement.target.parentElement.remove();
+  cardElement.remove();
 }
 
 // @todo: Вывести карточки на страницу
 
 initialCards.forEach(item => {
-  container.append(getCardElement(item, removeCardElement));
+  container.append(getCardElement(item));
 });
