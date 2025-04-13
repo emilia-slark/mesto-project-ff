@@ -12,11 +12,13 @@ import '../pages/index.css';
 // ========== Переменные ==========
 const cardTemplate = document.querySelector('#card-template').content;
 const container = document.querySelector('.places__list');
-const popupImage = document.querySelector('.popup_type_image');
+const popupCard = document.querySelector('.popup_type_image');
 const popupEditProfile = document.querySelector('.popup_type_edit');
 const popupNewCard = document.querySelector('.popup_type_new-card');
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonNewCard = document.querySelector('.profile__add-button');
+const popupCardImage = popupCard.querySelector('.popup__image');
+const popupCardDesc = popupCard.querySelector('.popup__caption');
 
 // Объект формы редактирования профиля и ее элементы
 const formEditProfile = { 
@@ -46,9 +48,10 @@ function getFormModal(modalElement) {
 }
 
 function setImageModal(card) {
-  openModal(popupImage);
-  popupImage.querySelector('.popup__image').src = card.querySelector('.card__image').src;
-  popupImage.querySelector('.popup__caption').textContent = card.querySelector('.card__title').textContent;
+  popupCardImage.src = card.link;
+  popupCardImage.alt = card.name;
+  popupCardDesc.textContent = card.name;
+  openModal(popupCard);
 }
 
 function setProfileModal(currentProfile) {
@@ -69,7 +72,8 @@ function handleFormCardSubmit(e) {
       name: formNewCard.name.value,
       link: formNewCard.link.value
     },
-    cardTemplate));
+    cardTemplate,
+    setImageModal));
   formNewCard.form.reset();
   onCloseModal(popupNewCard);
 }
