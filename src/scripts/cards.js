@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
   {
     name: "Калининград",
     link: "https://images.unsplash.com/photo-1700922455528-f7f23121a4a7?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -24,26 +24,3 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   }
 ];
-
-function getCardElement(card, cardTemplate) {
-  const cardElement = cardTemplate.querySelector('.places__item.card').cloneNode(true);
-  cardElement.querySelector('.card__image').src = card.link;
-  cardElement.querySelector('.card__image').alt = card.name;
-  cardElement.querySelector('.card__title').textContent = card.name;
-  return cardElement;
-}
-
-function removeCardElement(cardElement) {
-  cardElement.remove();
-}
-
-function toggleLike(e) {
-  e.target.classList.toggle('card__like-button_is-active');
-}
-
-export { 
-  initialCards,
-  getCardElement,
-  removeCardElement,
-  toggleLike
-};

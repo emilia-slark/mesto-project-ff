@@ -1,10 +1,12 @@
 function openModal(modalElement) {
   modalElement.classList.add('popup_is-opened');
-  modalElement.addEventListener('click', (e) => {
-    if (!e.target.closest('.popup__content'))
-      closeModal(modalElement);
-  });
-  document.addEventListener('keydown', (e) => closeOnEscape(e, modalElement));
+  modalElement._handlerEscape = (e) => closeOnEscape(e, modalElement);
+  document.addEventListener('keydown', modalElement._handlerEscape);
+}
+
+function onCloseModalOverlay(e) {
+  if (!e.target.closest('.popup__content'))
+    onCloseModal(e.target);
 }
 
 function setModalAnimation() {
@@ -13,33 +15,20 @@ function setModalAnimation() {
   });
 }
 
-function closeModal(modalElement) {
+function onCloseModal(modalElement) {
   modalElement.classList.remove('popup_is-opened');
-  document.removeEventListener('keydown', closeOnEscape);
+  document.removeEventListener('keydown', modalElement._handlerEscape);
+  delete modalElement._handlerEscape;
 }
 
-function closeOnEscape(e, modalElement) {
+const closeOnEscape = (e, modalElement) => {
   if (e.key === 'Escape') 
-    closeModal(modalElement);
-}
-
-function setImageModal(modalElement, card) {
-  modalElement.querySelector('.popup__image').src = card.querySelector('.card__image').src;
-  modalElement.querySelector('.popup__caption').textContent = card.querySelector('.card__title').textContent;
-}
-
-function setProfileModal(formElement, currentProfile) {
-  formElement.name.value = currentProfile.name.textContent;
-  formElement.description.value = currentProfile.description.textContent;
-}
-
-const getFormModal = (modalElement) => modalElement.querySelector('.popup__form');
+    onCloseModal(modalElement);
+};
 
 export {
   openModal,
-  closeModal,
-  setImageModal,
-  setProfileModal,
+  onCloseModal,
   setModalAnimation,
-  getFormModal
+  onCloseModalOverlay
 };
