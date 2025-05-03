@@ -1,117 +1,83 @@
-import { cohort, token } from "./config.js";
+import { baseUrl, token } from "./config.js";
+
+function handleResponse(response) {
+  return response.ok ? response.json() : Promise.reject(`${response.status} - ${context}`);
+}
 
 function fetchUserData() {
-  return fetch(`https://mesto.nomoreparties.co/v1/${cohort}/users/me`, {
+  return fetch(`${baseUrl}/users/me`, {
     headers: {
       Authorization: token,
     },
-  }).then((response) =>
-    response.ok
-      ? response.json()
-      : Promise.reject(`${response.status} - fetchUserData`)
-  );
+  }).then((response) => handleResponse(response, "fetchUserData"));
 }
 
 function fetchCardItems() {
-  return fetch(`https://mesto.nomoreparties.co/v1/${cohort}/cards`, {
+  return fetch(`${baseUrl}/cards`, {
     headers: {
       Authorization: token,
     },
-  }).then((response) =>
-    response.ok
-      ? response.json()
-      : Promise.reject(`${response.status} - fetchCardItems`)
-  );
+  }).then((response) => handleResponse(response, "fetchCardItems"));
 }
 
 function updateUserProfile(newUserData) {
-  return fetch(`https://mesto.nomoreparties.co/v1/${cohort}/users/me`, {
+  return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
       Authorization: token,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newUserData),
-  }).then((response) =>
-    response.ok
-      ? response.json()
-      : Promise.reject(`${response.status} - updateUserProfile`)
-  );
+  }).then((response) => handleResponse(response, "updateUserProfile"));
 }
 
 function postCard(newCard) {
-  return fetch(`https://mesto.nomoreparties.co/v1/${cohort}/cards`, {
+  return fetch(`${baseUrl}/cards`, {
     method: "POST",
     headers: {
       Authorization: token,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newCard),
-  }).then((response) =>
-    response.ok
-      ? response.json()
-      : Promise.reject(`${response.status} - postCard`)
-  );
+  }).then((response) => handleResponse(response, "postCard"));
 }
 
 function deleteCard(cardId) {
-  return fetch(`https://mesto.nomoreparties.co/v1/${cohort}/cards/${cardId}`, {
+  return fetch(`${baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: {
       Authorization: token,
     },
-  }).then((response) =>
-    response.ok
-      ? response.json()
-      : Promise.reject(`${response.status} - deleteCard`)
-  );
+  }).then((response) => handleResponse(response, "deleteCard"));
 }
 
 function likeCard(cardId) {
-  return fetch(
-    `https://mesto.nomoreparties.co/v1/${cohort}/cards/likes/${cardId}`,
-    {
+  return fetch(`${baseUrl}/cards/likes/${cardId}`, {
       method: "PUT",
       headers: {
         Authorization: token,
       },
-    }
-  ).then((response) =>
-    response.ok
-      ? response.json()
-      : Promise.reject(`${response.status} - likeCard`)
-  );
+  }).then((response) => handleResponse(response, "likeCard"));
 }
 
 function dislikeCard(cardId) {
-  return fetch(
-    `https://mesto.nomoreparties.co/v1/${cohort}/cards/likes/${cardId}`,
-    {
+  return fetch(`${baseUrl}/cards/likes/${cardId}`, {
       method: "DELETE",
       headers: {
         Authorization: token,
       },
-    }
-  ).then((response) =>
-    response.ok
-      ? response.json()
-      : Promise.reject(`${response.status} - dislikeCard`)
-  );
+  }).then((response) => handleResponse(response, "dislikeCard"));
 }
 
 function postAvatar(newAvatar) {
-  return fetch(`https://mesto.nomoreparties.co/v1/${cohort}/users/me/avatar`, {
+  return fetch(`${baseUrl}/users/me/avatar`, {
     method: "PATCH",
     headers: {
       Authorization: token,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newAvatar),
-  }).then((response) =>
-    response.ok
-      ? response.json()
-      : Promise.reject(`${response.status} - postAvatar`)
-  );
+  }).then((response) => handleResponse(response, "postAvatar"));
 }
 
 export {

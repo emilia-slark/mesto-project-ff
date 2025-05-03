@@ -177,10 +177,16 @@ function handlePopupDeleteCard(cardElement) {
 // Обработчик формы удаления карточки
 function handleFormDeleteCardSubmit(e, cardElement) {
   e.preventDefault();
+  formDeleteCard.form._button.textContent = 'Удаление...';
   deleteCard(cardElement._id)
-    .then(() => cardElement.remove())
-    .catch((err) => console.log(err));
-  onCloseModal(popupDeleteCard);
+    .then(() => {
+      cardElement.remove();
+      onCloseModal(popupDeleteCard);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      formDeleteCard.form._button.textContent = 'Да';
+    });
 }
 
 // Обработчик лайка
@@ -215,7 +221,6 @@ function handleFormAvatarSubmit(e) {
     .finally(() => {
       formNewAvatar.form._button.textContent = "Сохранить";
     });
-
   formNewAvatar.form.reset();
   clearValidation(formNewAvatar.form, validationConfig);
   onCloseModal(popupNewAvatar);
@@ -243,11 +248,13 @@ buttonEditProfile.addEventListener("click", () => {
 });
 
 buttonNewCard.addEventListener("click", () => {
+  formNewCard.form.reset();
   openModal(popupNewCard);
   clearValidation(formNewCard.form, validationConfig);
 });
 
 currentProfile.avatar.addEventListener("click", () => {
+  formNewAvatar.form.reset();
   openModal(popupNewAvatar);
   clearValidation(formNewAvatar.form, validationConfig);
 });

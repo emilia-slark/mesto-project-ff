@@ -1,15 +1,15 @@
-function showInputError(form, input, errorMassage, validationConfig) {
+function showInputError(form, input, errorMessage, validationConfig) {
   const error = form.querySelector(`.${input.id}-error`);
   input.classList.add(validationConfig.inputErrorClass.slice(1));
   error.classList.add(validationConfig.errorClass.slice(1));
-  error.textContent = errorMassage;
+  error.textContent = errorMessage;
 }
 
 function hideInputError(form, input, validationConfig) {
   const error = form.querySelector(`.${input.id}-error`);
   input.classList.remove(validationConfig.inputErrorClass.slice(1));
   error.classList.remove(validationConfig.errorClass.slice(1));
-  error.textContent = "Ошибка";
+  error.textContent = "";
 }
 
 function isValid(formElement, inputElement, validationConfig) {
@@ -38,20 +38,27 @@ function setEventListeners(formElement, validationConfig) {
   const inputList = Array.from(
     formElement.querySelectorAll(validationConfig.inputSelector)
   );
-  const button = formElement.querySelector(
-    validationConfig.submitButtonSelector
-  );
+  const button = formElement.querySelector(validationConfig.submitButtonSelector);
 
   formElement._inputList = inputList;
   formElement._button = button;
 
-  toggleButtonState(inputList, button);
+  toggleButtonState(inputList, button, validationConfig);
   inputList.forEach((input) => {
     input.addEventListener("input", () => {
       isValid(formElement, input, validationConfig);
-      toggleButtonState(inputList, button);
+      toggleButtonState(inputList, button, validationConfig);
     });
   });
+}
+
+function clearValidation(formElement, validationConfig) {
+  if (!formElement._inputList || !formElement._button) return;
+
+  formElement._inputList.forEach((input) => {
+    isValid(formElement, input, validationConfig);
+  });
+  toggleButtonState(formElement._inputList, formElement._button, validationConfig);
 }
 
 function enableValidation(validationConfig) {
@@ -63,21 +70,4 @@ function enableValidation(validationConfig) {
   });
 }
 
-function clearValidation(formElement, validationConfig) {
-  if (!formElement._inputList || !formElement._button) return;
-
-  formElement._inputList.forEach((input) => {
-    isValid(formElement, input, validationConfig);
-  });
-  toggleButtonState(formElement._inputList, formElement._button);
-}
-
 export { enableValidation, clearValidation };
-
-// enableValidation({
-//   formSelector: '.popup__form',
-//   inputSelector: '.popup__input',
-//   submitButtonSelector: '.popup__button',
-//   inputErrorClass: '.popup__input_type_error',
-//   errorClass: '.popup__input-error_active'
-// });
