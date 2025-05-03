@@ -1,12 +1,46 @@
+@import url('./__image-edit/profile__image-edit.css');
+
 .profile__image {
   width: 120px;
   height: 120px;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
-  border-radius: 50%;
-  background-size: cover;
-  background-position: center;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  transition: .3s;
+  cursor: pointer;
   margin: 0 29px 0 0;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+}
+
+.profile__image::after {
+  position: absolute;
+  z-index: 10;
+  transition: background-color .3s;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0);
+  content: '';
+}
+
+.profile__image:hover {
+  &::after {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  & > .profile__image-edit {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.profile__image-disabled { 
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 @media screen and (max-width: 740px) {

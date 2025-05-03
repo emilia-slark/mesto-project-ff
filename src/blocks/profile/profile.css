@@ -13,8 +13,9 @@
   padding: 36px 0;
 }
 
-.profile__image {
-  background-image: url('../../images/avatar.jpg');
+.profile.page__section button:disabled {
+  opacity: 0;
+  visibility: hidden;
 }
 
 @media screen and (max-width: 480px) {

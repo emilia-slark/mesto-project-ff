@@ -1,34 +1,31 @@
 function openModal(modalElement) {
-  modalElement.classList.add('popup_is-opened');
+  modalElement.classList.add("popup_is-opened");
   modalElement._handlerEscape = (e) => closeOnEscape(e, modalElement);
-  document.addEventListener('keydown', modalElement._handlerEscape);
+
+  if (modalElement.classList.contains("popup_type_delete-card"))
+    modalElement.querySelector(".popup__button").focus();
+
+  document.addEventListener("keydown", modalElement._handlerEscape);
 }
 
 function onCloseModalOverlay(e) {
-  if (!e.target.closest('.popup__content'))
-    onCloseModal(e.target);
+  if (!e.target.closest(".popup__content")) onCloseModal(e.target);
 }
 
 function setModalAnimation() {
-  document.querySelectorAll('.popup').forEach((item) => {
-    item.classList.add('popup_is-animated');
+  document.querySelectorAll(".popup").forEach((item) => {
+    item.classList.add("popup_is-animated");
   });
 }
 
 function onCloseModal(modalElement) {
-  modalElement.classList.remove('popup_is-opened');
-  document.removeEventListener('keydown', modalElement._handlerEscape);
+  modalElement.classList.remove("popup_is-opened");
+  document.removeEventListener("keydown", modalElement._handlerEscape);
   delete modalElement._handlerEscape;
 }
 
 const closeOnEscape = (e, modalElement) => {
-  if (e.key === 'Escape') 
-    onCloseModal(modalElement);
+  if (e.key === "Escape") onCloseModal(modalElement);
 };
 
-export {
-  openModal,
-  onCloseModal,
-  setModalAnimation,
-  onCloseModalOverlay
-};
+export { openModal, onCloseModal, setModalAnimation, onCloseModalOverlay };

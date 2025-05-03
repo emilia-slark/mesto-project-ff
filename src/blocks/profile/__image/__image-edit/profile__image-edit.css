@@ -1,0 +1,8 @@
+.profile__image-edit {
+  visibility: hidden;
+  opacity: 0;
+  z-index: 11;  
+  transition: opacity .3s;
+  aspect-ratio: 1 / 1;
+  block-size: 26px;
+}
