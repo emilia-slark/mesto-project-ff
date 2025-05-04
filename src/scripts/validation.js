@@ -55,10 +55,10 @@ function setEventListeners(formElement, validationConfig) {
 function clearValidation(formElement, validationConfig) {
   if (!formElement._inputList || !formElement._button) return;
 
-  formElement._inputList.forEach((input) => {
-    isValid(formElement, input, validationConfig);
+  formElement._inputList.forEach((input) => {  
+    hideInputError(formElement, input, validationConfig);
+    formElement._button.disabled = !input.validity.valid;
   });
-  toggleButtonState(formElement._inputList, formElement._button, validationConfig);
 }
 
 function enableValidation(validationConfig) {

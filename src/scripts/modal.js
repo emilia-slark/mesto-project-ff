@@ -5,11 +5,13 @@ function openModal(modalElement) {
   if (modalElement.classList.contains("popup_type_delete-card"))
     modalElement.querySelector(".popup__button").focus();
 
+  modalElement.addEventListener('mousedown', onCloseModalOverlay);
   document.addEventListener("keydown", modalElement._handlerEscape);
 }
 
 function onCloseModalOverlay(e) {
-  if (!e.target.closest(".popup__content")) onCloseModal(e.target);
+  if (!e.target.closest(".popup__content")) 
+    onCloseModal(e.target);
 }
 
 function setModalAnimation() {
@@ -28,4 +30,4 @@ const closeOnEscape = (e, modalElement) => {
   if (e.key === "Escape") onCloseModal(modalElement);
 };
 
-export { openModal, onCloseModal, setModalAnimation, onCloseModalOverlay };
+export { openModal, onCloseModal, setModalAnimation };

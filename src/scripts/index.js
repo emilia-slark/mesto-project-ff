@@ -1,8 +1,7 @@
 import {
   openModal,
   onCloseModal,
-  setModalAnimation,
-  onCloseModalOverlay,
+  setModalAnimation
 } from "./modal.js";
 
 import {
@@ -110,7 +109,6 @@ function handleFormProfileSubmit(e) {
     .finally(() => {
       formEditProfile.form._button.textContent = "Сохранить";
     });
-
   onCloseModal(popupEditProfile);
 }
 
@@ -134,15 +132,13 @@ function handleFormCardSubmit(e) {
           handleLike
         )
       );
+      formNewCard.form.reset();
+      onCloseModal(popupNewCard);
     })
     .catch((err) => console.log(err))
     .finally(() => {
       formNewCard.form._button.textContent = "Сохранить";
     });
-
-  formNewCard.form.reset();
-  clearValidation(formNewCard.form, validationConfig);
-  onCloseModal(popupNewCard);
 }
 
 function renderUserProfile(data) {
@@ -216,14 +212,13 @@ function handleFormAvatarSubmit(e) {
   postAvatar({ avatar: formNewAvatar.link.value })
     .then((data) => {
       currentProfile.avatar.style.backgroundImage = `url(${data.avatar})`;
+      formNewAvatar.form.reset();
+      onCloseModal(popupNewAvatar);
     })
     .catch((err) => console.log(err))
     .finally(() => {
       formNewAvatar.form._button.textContent = "Сохранить";
     });
-  formNewAvatar.form.reset();
-  clearValidation(formNewAvatar.form, validationConfig);
-  onCloseModal(popupNewAvatar);
 }
 
 function showWarning(errorElement, errorText) {
@@ -271,7 +266,6 @@ formNewAvatar.form.addEventListener("submit", handleFormAvatarSubmit);
 formDeleteCard.form.addEventListener("submit", (e) => {
   handleFormDeleteCardSubmit(e, popupDeleteCard._cardElement);
 });
-document.addEventListener("mousedown", onCloseModalOverlay);
 
 // ========== Инициализация ==========
 setModalAnimation();
